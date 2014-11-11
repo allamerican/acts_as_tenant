@@ -13,6 +13,14 @@ module ActsAsTenant
     "#{@@tenant_klass.to_s}_id"
   end
 
+  def self.original_tenant=(tenant)
+    RequestStore.store[:original_tenant] = tenant
+  end
+
+  def self.original_tenant
+    RequestStore.store[:original_tenant]
+  end
+
   def self.current_tenant=(tenant)
     RequestStore.store[:current_tenant] = tenant
   end
@@ -89,6 +97,8 @@ module ActsAsTenant
           raise ActsAsTenant::Errors::TenantIsImmutable unless new_record? || send(fkey).nil?
           super(model)
         end
+
+        define_method("is_current_tenant?") { ActsAsTenant.original_tenant.id == send(fkey) ? true : false }
 
         define_method "#{ActsAsTenant.tenant_klass.to_s}" do
           if !ActsAsTenant.current_tenant.nil? && send(fkey) == ActsAsTenant.current_tenant.id

@@ -1,6 +1,5 @@
 module ActsAsTenant
   module ControllerExtensions
-    
     # this method allows setting the current_tenant by reading the subdomain and looking
     # it up in the tenant-model passed to the method. The method will look for the subdomain 
     # in a column referenced by the second argument.

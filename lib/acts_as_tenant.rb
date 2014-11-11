@@ -12,12 +12,14 @@ require "acts_as_tenant/errors"
 require "acts_as_tenant/configuration"
 require "acts_as_tenant/controller_extensions"
 require "acts_as_tenant/model_extensions"
+require "acts_as_tenant/helper_extensions"
 
 #$LOAD_PATH.shift
 
 if defined?(ActiveRecord::Base)
   ActiveRecord::Base.send(:include, ActsAsTenant::ModelExtensions)
   ActionController::Base.extend ActsAsTenant::ControllerExtensions
+  ActionView::Base.send(:include, ActsAsTenant::HelperExtensions)
 end
 
 module ActsAsTenant
