@@ -19,6 +19,7 @@ require "acts_as_tenant/helper_extensions"
 if defined?(ActiveRecord::Base)
   ActiveRecord::Base.send(:include, ActsAsTenant::ModelExtensions)
   ActionController::Base.extend ActsAsTenant::ControllerExtensions
+  ActionController::Base.send(:include, ActsAsTenant::HelperExtensions)
   ActionView::Base.send(:include, ActsAsTenant::HelperExtensions)
 end
 
