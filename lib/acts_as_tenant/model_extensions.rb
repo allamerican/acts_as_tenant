@@ -98,7 +98,7 @@ module ActsAsTenant
           super(model)
         end
 
-        define_method("is_current_tenant?") { ActsAsTenant.original_tenant.id == send(fkey) ? true : false }
+        define_method("is_current_tenant?") { (ActsAsTenant.original_tenant.id == send(fkey) || ActsAsTenant.original_tenant.nil?) ? true : false }
 
         define_method "#{ActsAsTenant.tenant_klass.to_s}" do
           if !ActsAsTenant.current_tenant.nil? && send(fkey) == ActsAsTenant.current_tenant.id
